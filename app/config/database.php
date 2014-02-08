@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'fmtdb',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,12 +52,12 @@ return array(
 			'prefix'   => '',
 		),
 
-		'mysql' => array(
+		'fmtdb' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => $_ENV['SQL_FMTDB']['host'],
+			'database'  => $_ENV['SQL_FMTDB']['database'],
+			'username'  => $_ENV['SQL_FMTDB']['username'],
+			'password'  => $_ENV['SQL_FMTDB']['password'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -74,12 +74,12 @@ return array(
 			'schema'   => 'public',
 		),
 
-		'sqlsrv' => array(
+		'jsbd' => array(
 			'driver'   => 'sqlsrv',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'host'     => $_ENV['SQL_JSDB']['host'],
+			'database' => $_ENV['SQL_JSDB']['database'],
+			'username' => $_ENV['SQL_JSDB']['username'],
+			'password' => $_ENV['SQL_JSDB']['password'],
 			'prefix'   => '',
 		),
 
