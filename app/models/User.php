@@ -1,9 +1,14 @@
 <?php
 
+// namespace App\Models;
+
+use Baum\Node;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Node implements UserInterface, RemindableInterface {
+
+    protected $connection = 'fmtdb';
 
 	/**
 	 * The database table used by the model.
