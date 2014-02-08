@@ -15,3 +15,13 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('/test', function()
+{
+    return View::make('portal.index');
+});
+
+Route::get('/jobs', array('as' => 'jobs', function()
+{
+   return View::make('portal.pages.jobs');
+}));
