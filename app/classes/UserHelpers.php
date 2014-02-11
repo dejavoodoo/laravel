@@ -92,11 +92,6 @@ class UserHelpers {
         return $users_array;
     }
 
-    public function mergeUsersWithEmails($users_array, $emails_array)
-    {
-
-    }
-
     /**
      * @param $input_array
      * @param $column_name_to_group_by
