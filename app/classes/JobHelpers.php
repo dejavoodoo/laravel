@@ -2,12 +2,12 @@
 
 class JobHelpers {
 
-    public function __construct()
+    public function __construct(JSJob $job)
     {
-
+        $this->job = $job;
     }
 
-    public static function get_jobs_between_dates($start_date, $end_date)
+    public function get_jobs_between_dates($start_date, $end_date)
     {
         Log::info("Getting jobs between $start_date and $end_date...");
 
@@ -16,12 +16,9 @@ class JobHelpers {
             die('Invalid SQL date provided.');
         }
 
-        $Job = new \Job;
-        $jobs = $Job->whereBetween('DateAPPR', array($start_date, $end_date))->get();
-/*        $jobs = $Job->has('customer')->get();*/
+        $jobs = $this->job->whereBetween('DateAPPR', array($start_date, $end_date))->get();
 
-
-        return Helpers::prePrintR($jobs);
+        return $jobs;
     }
 
 }

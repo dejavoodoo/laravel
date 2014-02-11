@@ -54,4 +54,9 @@ class User extends Node implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+    public function customers()
+    {
+        return $this->hasMany('UserCustomer');
+    }
+
 }

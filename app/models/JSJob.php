@@ -1,6 +1,6 @@
 <?php
 
-class Job extends Eloquent {
+class JSJob extends Eloquent {
 
     protected $connection = 'jsdb';
     protected $table = 'Jobs';
