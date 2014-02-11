@@ -43,9 +43,10 @@ Route::get('/testing/jobs/{startDate}/{endDate}', function($startDate, $endDate)
     //$users = $UserHelpers->getUsers();
     $user_customers = $UserHelpers->getUserCustomers();
     $user_suppliers = $UserHelpers->getUserSuppliers();
+    $user_emails = $UserHelpers->getUserEmails();
     $users_and_customers = $UserHelpers->getUsersWithCustomers();
 
-    $users_array = $UserHelpers->mergeUsersWithCustsAndSupps($users_and_customers, $user_customers, $user_suppliers);
+    $users_array = $UserHelpers->mergeUsersWith($users_and_customers, $user_customers, $user_suppliers, $user_emails);
 
     //Helpers::prePrintR(DB::connection('fmtdb')->getQueryLog());
 
