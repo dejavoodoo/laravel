@@ -33,7 +33,7 @@ Route::get('/testing/jobs/{startDate}/{endDate}', function($startDate, $endDate)
 
 Route::get('temp/date/{date_to_validate}', function($date_to_validate)
 {
-    $validator = Helpers::isValidDate($date_to_validate);
+    $validator = Helpers::isValidSqlDate($date_to_validate);
 
     if($validator->fails())
         return 'Bad date!';

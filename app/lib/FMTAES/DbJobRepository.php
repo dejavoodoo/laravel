@@ -19,13 +19,13 @@ class DbJobRepository implements JobRepository {
         }*/
 
         // Check if start date is valid
-        $validator = \Helpers::isValidDate($start_date);
+        $validator = \Helpers::isValidSqlDate($start_date);
         if($validator->fails())
             // todo: Log
             return 'Bad start date!';
 
         // Check if end date is valid
-        $validator = \Helpers::isValidDate($end_date);
+        $validator = \Helpers::isValidSqlDate($end_date);
         if($validator->fails())
             // todo: Log
             return 'Bad end date!';
