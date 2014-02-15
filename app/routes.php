@@ -18,6 +18,7 @@ Route::get('/', function()
     return View::make('hello');
 });
 
+App::bind('FMTAES\UserRepository', 'FMTAES\DbUserRepository');
 Route::get('/show/users', 'FMTAES\UserController@showUsers');
 
 Route::get('user/jobs', ['as' => 'jobs', function()
