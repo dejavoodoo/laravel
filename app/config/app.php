@@ -106,6 +106,11 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+
+        /* Own */
+        'StorageServiceProvider',
+
+        /* Custom */
         'Way\Generators\GeneratorsServiceProvider',
         'Bootstrapper\BootstrapperServiceProvider',
         'Baum\BaumServiceProvider',

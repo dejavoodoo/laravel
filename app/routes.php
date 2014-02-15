@@ -18,7 +18,7 @@ Route::get('/', function()
     return View::make('hello');
 });
 
-App::bind('FMTAES\UserRepository', 'FMTAES\DbUserRepository');
+/* FMT AES Testing */
 Route::get('/show/users', 'FMTAES\UserController@showUsers');
 
 Route::get('user/jobs', ['as' => 'jobs', function()
@@ -26,6 +26,8 @@ Route::get('user/jobs', ['as' => 'jobs', function()
     $data = ['page_heading' => 'Jobs'];
     return View::make('portal.pages.jobs')->with(compact('data', 'jobs'));
 }]);
+
+Route::get('/show/jobs/{start_date}/{end_date}', 'FMTAES\JobController@showJobs');
 
 // API
 Route::group(['prefix' => 'api'], function()
@@ -37,7 +39,7 @@ Route::group(['prefix' => 'api'], function()
     }]);
 });
 
-Route::get('/testing/user', function()
+Route::get('/testing/create-user', function()
 {
     // Create a static user for easy login
     $user = User::create([
