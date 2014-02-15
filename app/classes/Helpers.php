@@ -15,9 +15,10 @@ class Helpers {
 
     public static function prePrintR($object)
     {
-        echo '<pre>';
-        print_r($object);
-        echo '</pre>';
+        $string = '<pre>';
+        $string .= print_r($object, true);
+        $string .= '</pre>';
+        return $string;
     }
 
 }

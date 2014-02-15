@@ -28,6 +28,17 @@ $env = $app->detectEnvironment(array(
     'local' => array('Scott-PC'),
 ));
 
+/*$env = $app->detectEnvironment(function()
+{
+   if('127.0.0.1' == $_SERVER["REMOTE_ADDR"])
+        return 'local';
+    else
+        return 'production';
+    //return $_ENV['APP_ENV'];
+
+//    return getenv('APP_ENV') ?: 'local';
+});*/
+
 /*
 |--------------------------------------------------------------------------
 | Bind Paths

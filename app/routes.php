@@ -11,47 +11,29 @@
 |
 */
 
+
+
 Route::get('/', function()
 {
-	return View::make('hello');
+    return View::make('hello');
 });
 
-Route::get('/test', function()
+Route::get('/show/users', 'FMTAES\UserController@showUsers');
+
+Route::get('user/jobs', ['as' => 'jobs', function()
 {
-    return View::make('portal.index');
-});
+    $data = ['page_heading' => 'Jobs'];
+    return View::make('portal.pages.jobs')->with(compact('data', 'jobs'));
+}]);
 
-Route::get('/jobs', array('as' => 'jobs', function()
+// API
+Route::group(['prefix' => 'api'], function()
 {
-   return View::make('portal.pages.jobs');
-}));
-
-Route::get('/testing/jobs/{startDate}/{endDate}', function($startDate, $endDate)
-{
-    $Job = new JSJob;
-    $JobHelpers = new JobHelpers($Job);
-    $User = new User;
-    $UserHelpers = new UserHelpers($User);
-    //$jobs = $JobHelpers->get_jobs_between_dates($startDate, $endDate);
-
-    //Helpers::prePrintR($jobs);
-
-    //$users = $UserHelpers->getUsers();
-
-    //Helpers::prePrintR($users);
-
-    //$users = $UserHelpers->getUsers();
-    $user_customers = $UserHelpers->getUserCustomers();
-    $user_suppliers = $UserHelpers->getUserSuppliers();
-    $user_emails = $UserHelpers->getUserEmails();
-    $users_and_customers = $UserHelpers->getUsersWithCustomers();
-
-    $users_array = $UserHelpers->mergeUsersWith($users_and_customers, $user_customers, $user_suppliers, $user_emails);
-
-    //Helpers::prePrintR(DB::connection('fmtdb')->getQueryLog());
-
-    return Helpers::prePrintR($users_array);
-
+    Route::get('jobs', ['as' => 'api_jobs', function()
+    {
+        $jobs = JSJob::paginate(15);
+        return $jobs;
+    }]);
 });
 
 Route::get('/testing/user', function()

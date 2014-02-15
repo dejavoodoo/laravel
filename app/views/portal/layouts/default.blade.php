@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app>
 
 <head>
 
@@ -13,15 +13,16 @@
     </title>
 
     <!-- Core CSS - Include with every page -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    {{ HTML::style('/css/bootstrap.min.css') }}
+    {{ HTML::style('/font-awesome/css/font-awesome.css') }}
 
     <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
+    {{ HTML::style('/css/plugins/morris/morris-0.4.3.min.css') }}
+    {{ HTML::style('/css/plugins/timeline/timeline.css') }}
 
     <!-- SB Admin CSS - Include with every page -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    {{ HTML::style('/css/sb-admin.css') }}
+
 
     @yield('styles')
 
@@ -31,32 +32,36 @@
 
 <div id="wrapper">
 
-@include('portal.layouts.header')
+    @include('portal.layouts.header')
 
-@include('portal.layouts.side')
+    @include('portal.layouts.side')
 
-<div id="page-wrapper">
+    <div id="page-wrapper">
     @yield('content')
-</div>
-<!-- /#page-wrapper -->
+    </div>
+    <!-- /#page-wrapper -->
 
 </div>
 <!-- /#wrapper -->
 
+
 <!-- Core Scripts - Include with every page -->
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+{{ HTML::script('/js/jquery-1.10.2.js') }}
+{{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js') }}
+{{ HTML::script('/js/bootstrap.min.js') }}
+{{ HTML::script('/js/plugins/metisMenu/jquery.metisMenu.js') }}
 
 <!-- Page-Level Plugin Scripts - Dashboard -->
-<script src="js/plugins/morris/raphael-2.1.0.min.js"></script>
-<script src="js/plugins/morris/morris.js"></script>
+{{ HTML::script('/js/plugins/morris/raphael-2.1.0.min.js') }}
+{{ HTML::script('/js/plugins/morris/morris.js') }}
 
 <!-- SB Admin Scripts - Include with every page -->
-<script src="js/sb-admin.js"></script>
+{{ HTML::script('/js/sb-admin.js') }}
 
 <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-<script src="js/demo/dashboard-demo.js"></script>
+{{ HTML::script('/js/demo/dashboard-demo.js') }}
+
+@yield('scripts')
 
 </body>
 
