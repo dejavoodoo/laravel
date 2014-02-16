@@ -7,10 +7,10 @@ class UserTableSeeder extends Seeder {
         // php artisan db:seed --database=fmtdb
 
         // Delete the current table contents
-        DB::table('users')->delete();
-        DB::table('user_emails')->delete();
-        DB::table('user_jsdb_customers')->delete();
-        DB::table('user_jsdb_suppliers')->delete();
+        DB::table('users')->truncate();
+        DB::table('user_emails')->truncate();
+        DB::table('user_jsdb_customers')->truncate();
+        DB::table('user_jsdb_suppliers')->truncate();
 
         // Create a static user for easy login testing
         $user = User::create([
@@ -106,18 +106,15 @@ class UserTableSeeder extends Seeder {
                     'cust_name' => $faker->company,
                 ]);
 
-            } else {
-
-                // Create a sub customer
-                return UserCustomer::create([
-                    'user_id' => $user_id,
-                    'jsdb_cust_id' => 0,
-                    'jsdb_sub_cust_id' => rand(1,999),
-                    'cust_name' => $faker->company,
-                ]);
-
             }
 
+            // Create a sub customer
+            return UserCustomer::create([
+                'user_id' => $user_id,
+                'jsdb_cust_id' => 0,
+                'jsdb_sub_cust_id' => rand(1,999),
+                'cust_name' => $faker->company,
+            ]);
         }
     }
 
