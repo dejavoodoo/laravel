@@ -4,7 +4,7 @@ namespace FMTAES;
 
 use Baum\Node;
 
-class DbUserRepository extends Node implements UserRepository {
+class DbUserRepository2 extends Node implements UserRepository2 {
 
     protected $user;
     protected $userCustomer;
@@ -24,7 +24,19 @@ class DbUserRepository extends Node implements UserRepository {
 
     public function getUsers()
     {
-        $users = $this->user->all();
+/*        $users = $this->user
+            ->leftJoin('user_jsdb_customers', 'user_jsdb_customers.user_id', '=', 'users.id')
+            ->leftJoin('user_jsdb_suppliers', 'user_jsdb_suppliers.user_id', '=', 'users.id')
+            ->get();*/
+
+        $users = $this->user
+            ->leftJoin('user_jsdb_customers', function($join)
+            {
+                $join->on('users.id', '=', 'user_jsdb_customers.user_id')
+                    ->whereNotExists('user_jsdb_customers.user_id');
+            })
+            //->leftJoin('user_jsdb_suppliers', 'user_jsdb_suppliers.user_id', '=', 'users.id')
+            ->get()->toArray();
         return $users;
     }
 
@@ -37,22 +49,19 @@ class DbUserRepository extends Node implements UserRepository {
 
     public function getUserSuppliers()
     {
-        $suppliers = $this->userSupplier->all();
-        return $suppliers;
-        //return $this->createArrayGroupedBy($suppliers, 'user_id');
+        $suppliers = $this->userSupplier->all()->toArray();
+        return $this->createArrayGroupedBy($suppliers, 'user_id');
     }
 
     public function getUserEmails()
     {
-        $emails = $this->userEmail->all();
-        return $emails;
-        //return $this->createArrayGroupedBy($emails, 'user_id');
+        $emails = $this->userEmail->all()->toArray();
+        return $this->createArrayGroupedBy($emails, 'user_id');
     }
 
     public function getUsersWithCustomers()
     {
-        //$users = $this->user->get()->toHierarchy()->toArray();
-        $users = $this->user->get()->toArray();
+        $users = $this->user->get()->toHierarchy()->toArray();
         return $users;
     }
 
@@ -72,14 +81,14 @@ class DbUserRepository extends Node implements UserRepository {
         return $array;
     }
 
-    public function mergeUsersWith($users_array, $custs_array, $supps_array, $emails_array, $jobs_array)
+    public function mergeUsersWith($users_array, $custs_array, $supps_array, $emails_array)
     {
         // Iterate through the user array and merge CustID, SubCustID and SuppID if user_id key values match.
         foreach ($users_array as $user_key => $user_value) {
 
             // Do some recursion - no children left behind!
             if (!empty($users_array[$user_key]) && is_array($users_array[$user_key])) {
-                $users_array[$user_key] = $this->mergeUsersWith($users_array[$user_key], $custs_array, $supps_array, $emails_array, $jobs_array);
+                $users_array[$user_key] = $this->mergeUsersWith($users_array[$user_key], $custs_array, $supps_array, $emails_array);
             }
 
             // Remove the children element temporarily so we can place some key and value pairs above its position in the array
@@ -110,7 +119,7 @@ class DbUserRepository extends Node implements UserRepository {
                 $users_array[$user_key]['children'] = $children_array;
 
 
-/*            if (!empty($users_array[$user_key]) && is_array($users_array[$user_key])) {
+            if (!empty($users_array[$user_key]) && is_array($users_array[$user_key])) {
 
                 if(array_key_exists('email', $users_array[$user_key])) {
                     $email = $users_array[$user_key]['email'];
@@ -129,52 +138,16 @@ class DbUserRepository extends Node implements UserRepository {
                         if($e_k == 'id')
                             if(!is_array($e_v))
                                 $id = $e_v;
-                         echo "$id :: Email sent to $email<br>";
+                        echo "$id :: Email sent to $email<br>";
                     }
                 }
-            }*/
+            }
 
-
-            /*var_dump(memory_get_usage());
+            /*            var_dump(memory_get_usage());
             echo '<br>';*/
         }
 
         $users_array = $this->addLeafKeys($users_array);
-
-        foreach ($users_array as $user_key => $user_value) {
-/*            if(is_array($user_value) && !empty($user_value))
-            {
-                foreach($user_value as $a => $v)
-                {
-                    echo $a . '<br>';
-                }
-            }*/
-            if (is_array($user_value) && !empty($user_value)) {
-                //if($user_key == 'jsdb_cust_id_array') {
-                foreach($user_value as $cust_id_key => $cust_id_value)
-                {
-                    //echo $cust_id_key . '<br>';
-
-                    foreach($jobs_array as $job_key => $job_value) {
-                        if(is_array($job_value) && !empty($job_value)) {
-                            foreach($job_value as $j_k => $j_v)
-                            {
-                                foreach($cust_id_value as $c_k => $c_v)
-                                {
-                                    echo $cust_id_key . '<br>';
-                                    if($j_k == 'CustID' && $cust_id_key == 'jsdb_cust_id' && $j_v == $cust_id_value )
-                                    {
-                                        //echo 'CustID = ' . $cust_id_value . '<br>';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-              //}
-            }
-        }
-
         return $users_array;
     }
 
@@ -188,8 +161,8 @@ class DbUserRepository extends Node implements UserRepository {
         if (!array_key_exists($key_name_to_add, $users_array))
         {
             $users_array[$user_key][$key_name_to_add] = $value_to_add;
-/*            var_dump(memory_get_usage());
-            echo '<br>';*/
+            /*            var_dump(memory_get_usage());
+                        echo '<br>';*/
         }
         return $users_array;
     }
@@ -207,11 +180,6 @@ class DbUserRepository extends Node implements UserRepository {
             $arr[$v[$column_name_to_group_by]][$k] = $v;
 
         return $arr;
-    }
-
-    public function getArrayOfUserJobs()
-    {
-
     }
 
 }

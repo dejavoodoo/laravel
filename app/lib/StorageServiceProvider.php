@@ -12,8 +12,18 @@ class StorageServiceProvider extends ServiceProvider {
         );
 
         $this->app->bind(
+            'FMTAES\UserRepository2',
+            'FMTAES\DbUserRepository2'
+        );
+
+        $this->app->bind(
             'FMTAES\JobRepository',
             'FMTAES\DbJobRepository'
+        );
+
+        $this->app->bind(
+            'FMTAES\UserEmailsRepository',
+            'FMTAES\DbUserEmailsRepository'
         );
     }
 

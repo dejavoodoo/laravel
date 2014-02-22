@@ -20,6 +20,7 @@ Route::get('/', function()
 
 /* FMT AES Testing */
 Route::get('/show/users', 'FMTAES\UserController@showUsers');
+Route::get('/show/customers', 'FMTAES\UserController@showCustomers');
 
 Route::get('user/jobs', ['as' => 'jobs', function()
 {

@@ -28,4 +28,15 @@ class Helpers {
         return checkdate($month, $day, $year);
     }*/
 
+    /*
+     * Converts bytes to MB
+     */
+    public static function formatBytes($size, $precision = 2)
+    {
+        $base = log($size) / log(1024);
+        $suffixes = array('', 'k', 'M', 'G', 'T');
+
+        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+    }
+
 }

@@ -13,18 +13,9 @@ class Helpers {
     {
         $modified_users_array = [];
 
-        foreach($users_array as $user_key => $user_value) {
+/*        foreach($users_array as $user_key => $user_value) {
             if($user_key == 'jsdb_cust_id_array'
-        }
-
-
-
-
-
-
-
-
+        }*/
         return $modified_users_array;
     }
-
 }
