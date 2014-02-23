@@ -20,24 +20,27 @@ class DbJobRepository implements JobRepository {
         $this->supplier = $supplier;
     }
 
+    /*
+     * Get all jobs between start_date and end_date
+     *
+     * @param $start_date string
+     * @param $end_date string
+     *
+     * @return Eloquent collection
+     */
     public function getJobsBetweenDates($start_date, $end_date)
     {
-        // Get all jobs between start_date and end_date
-        $jobs = $this->jobsBetweenDates($start_date, $end_date)->get();
+        $jobs = $this
+            ->jobsBetweenDates($start_date, $end_date)
+            ->select(['JobNo','DateAPPR','CustID','SubCustID'])
+            ->get();
         return $jobs;
-        //return \Helpers::prePrintR($jobs);
     }
 
     public function jobsBetweenDates($start_date, $end_date)
     {
         $jobs = $this->job
-            ->whereBetween('DateAPPR', [$start_date, $end_date])
-            ->select([
-                'JobNo',
-                'DateAPPR',
-                'CustID',
-                'SubCustID'
-            ]);
+            ->whereBetween('DateAPPR', [$start_date, $end_date]);
         return $jobs;
     }
 
@@ -50,27 +53,22 @@ class DbJobRepository implements JobRepository {
      */
     public function getSuppliersWithAllocatedJobs($jobs)
     {
+        return $jobs
+            ->join('JobSuppCalls', 'Jobs.JobNo', '=', 'JobSuppCalls.JobNo')
+            ->select(['JobSuppCalls.SuppID', 'JobSuppCalls.JobNo'])
+            ->get();
+    }
+    /*public function getSuppliersWithAllocatedJobs2($jobs)
+    {
         $supp_collection = new \Illuminate\Support\Collection;
         foreach($jobs as $job)
         {
-            $supp = $this->jobSuppCall
-                ->select(['SuppID', 'JobNo'])
-                ->where('JobNo', $job->JobNo)
-                ->get();
-
+            $supp = $this->jobSuppCall->select(['SuppID', 'JobNo'])->where('JobNo', $job->JobNo)->get();
             $supp_collection = $supp_collection->merge($supp);
         }
         return $supp_collection;
-    }
+        //return $this->jobSuppCall->all()->get(['SuppID', 'JobNo']);
+    }*/
 
-    public function getMaxJobNumber($start_date, $end_date)
-    {
-        return $this->jobsBetweenDates($start_date, $end_date)->max('JobNo');
-    }
-
-    public function getMinJobNumber($start_date, $end_date)
-    {
-        return $this->jobsBetweenDates($start_date, $end_date)->min('JobNo');
-    }
 
 }

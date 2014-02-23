@@ -11,6 +11,11 @@ class DbUserEmailsRepository implements UserEmailsRepository {
         $this->user_email = $user_email;
     }
 
+    public function userEmail()
+    {
+        return $this->user_email;
+    }
+
     public function getAllUserEmails()
     {
         return $this->user_email->get();
@@ -19,6 +24,11 @@ class DbUserEmailsRepository implements UserEmailsRepository {
     public function getUserEmail($user_id)
     {
         return $this->user_email->where('user_id', '=', $user_id)->get();
+    }
+
+    public function getCustomers()
+    {
+        return $this->user_email->users();
     }
 
 }

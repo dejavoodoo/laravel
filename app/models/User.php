@@ -59,4 +59,14 @@ class User extends Node implements UserInterface, RemindableInterface {
         return $this->hasMany('UserCustomer');
     }
 
+    public static function getEmails()
+    {
+        return static::with('UserEmail')->get();
+    }
+
+    public function userEmails()
+    {
+        return $this->hasMany('UserEmail', 'user_id', 'id');
+    }
+
 }

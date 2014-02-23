@@ -6,9 +6,14 @@ class UserEmail extends Eloquent {
 
     protected $table = 'user_emails';
 
-    public function user()
+    public function getUsersAndEmails()
     {
-        return $this->belongsTo('User');
+        return $this->with('User')->get();
+    }
+
+    public function users()
+    {
+        return $this->belongsTo('User', 'user_id', 'id');
     }
 
 }

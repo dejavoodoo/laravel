@@ -105,7 +105,6 @@ class UserTableSeeder extends Seeder {
                     'jsdb_sub_cust_id' => 0,
                     'cust_name' => $faker->company,
                 ]);
-
             }
 
             // Create a sub customer
@@ -135,7 +134,7 @@ class UserTableSeeder extends Seeder {
     protected function insertSomeUserEmails($faker, $user)
     {
         // insert 0-3 emails (user_emails_tbl)
-        $rand = rand(0, 2);
+        $rand = rand(0, 3);
         if ($rand > 0) {
             for ($i = 0; $i < $rand; $i++) {
                 $this->createRandomUserEmail($faker, $user->id);
@@ -145,8 +144,8 @@ class UserTableSeeder extends Seeder {
 
     protected function insertSomeUserCustomers($faker, $user)
     {
-        // insert 0-3 customers (user_jsdb_customers_tbl)
-        $rand = rand(0, 1);
+        // insert 0-4 customers (user_jsdb_customers_tbl)
+        $rand = rand(0, 4);
         if ($rand > 0) {
             for ($i = 0; $i < $rand; $i++) {
                 $this->createRandomUserCustomer($faker, $user->id);
@@ -156,8 +155,8 @@ class UserTableSeeder extends Seeder {
 
     protected function insertSomeUserSuppliers($faker, $user)
     {
-        // insert 0-3 suppliers (user_jsdb_suppliers_tbl)
-        $rand = rand(0, 1);
+        // insert 0-4 suppliers (user_jsdb_suppliers_tbl)
+        $rand = rand(0, 4);
         if ($rand > 0) {
             for ($i = 0; $i < $rand; $i++) {
                 $this->createRandomUserSupplier($faker, $user->id);
